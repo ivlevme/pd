@@ -6,42 +6,39 @@
     <form action="https://echo.htmlacademy.ru" method="post" class="container form">
       <section class="main-information">
         <div class="row">
-          <div class=" col col-12 col-sm-4">
-            <label class="label" for="surname">Фамилия</label>
-            <input class="input" id="surname" type="text" name="surname" placeholder="Фамилия">
-          </div>
-          <div class=" col col-12 col-sm-4">
-            <label class="label" for="name">Имя</label>
-            <input class="input" id="name" type="text" placeholder="Имя" name="name">
-          </div>
-          <div class=" col col-12 col-sm-4">
-            <label class="label" for="patronymic">Отчество</label>
-            <input class="input" id="patronymic" type="text" name="patronymic" placeholder="Отчество">
-          </div>
-        </div>
-          <div class="row">
-            <div class="col">
-              <label class="label" for="sex">Пол</label>
-              <select class="sex" id="sex" name="sex">
-                <option>Муж</option>
-                <option>Жен</option>
-              </select>
+          <div class="col-12 col-md-8">
+            <div class="row">
+              <div class="col">
+                <input class="input" id="main-information__surname" type="text" name="main-information__surname" required>
+                <div class="label-box">
+                  <label class="label" for="main-information__surname">Фамилия</label>
+                </div>
+                <input class="input input-name" id="main-information__name" type="text" name="main-information__name" required>
+                <div class="label-box">
+                  <label class="label" for="main-information__name">Имя</label>
+                </div>
+              </div>
+              <div class="col">
+                <select class="sex" id="sex" name="sex">
+                  <option>Муж</option>
+                  <option>Жен</option>
+                </select>
+                <div class="label-box">
+                  <label class="label label-sex" for="sex">Пол</label>
+                </div>
+                <input class="birth-date" id="birth-date" type="date" name="birth-date" required>
+                <div class="label-box">
+                  <label class="label label-birth-date" for="birth-date">Дата рождения</label>
+                </div>
+              </div>
             </div>
-            <div class="col">
-              <label class="label" for="birth-date">Дата рождения</label>
-              <input class="input" id="birth-date" type="date" name="birth-date">
-            </div>
-            <div class="col">
-              <label class="label" for="nationality">Национальность</label>
-              <input class="input" id="nationality" type="text" name="nationality">
-            </div>
-          </div>
-          <div class="row">
-            <div class=" col col-12 col-sm-8">
+            <input class="input input-birth-place" type="text" name="birth-place" required>
+            <div class="label-box">
               <label class="label label-birth-place" for="birth-place">Место рождения</label>
-              <input class="input input-birth-place" type="text" name="birth-place" placeholder="село, деревня, город, район, область">
             </div>
-            <div class="col col-12 col-sm-4 crop">
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="crop">
               <croppa v-model="myCroppa"
               :width="150"
               :height="150"
@@ -58,45 +55,70 @@
             </croppa>
             <button class="btn btn-default btn-crop" type="button" @click="generateImage">Обрезать</button>
             <p class="status-crop" v-bind:class="{ success: cropFlag, fail: !cropFlag }">{{cropStatus}}</p>
+            </div>
+            </div>
           </div>
+          <div class="row">
         </div>
       </section>
       <section class="education">
         <h2 class="education__description">Образование</h2>
         <table class="table table-responsive">
-          <tbody class="">
+          <thead>
             <tr>
-              <td>Учебное заведение</td>
-              <td>Факультет</td>
-              <td>Форма обучения</td>
-              <td>Год поступления</td>
-              <td>Год окончания или ухода</td>
-              <td>Если не окончил, то с какого курса ушел</td>
-              <td>Полученная спецальность - указать № диплома</td>
-            </tr>
+              <th>Учебное заведение</th>
+              <th>Факультет</th>
+              <th>Форма обучения</th>
+              <th>Год поступления</th>
+              <th>Год окончания или ухода</th>
+              <th>Если не окончил, то с какого курса ушел</th>
+              <th>Полученная спецальность - указать № диплома</th>
+              </tr>
+          </thead>
+          <tbody>
             <tr v-for="(entry, index) in tableDataEducation">
               <td>
-                <input class="input" type="text" name="institution" v-model="entry['institution']" placeholder="универ">
+                <input class="input" id="institution" type="text" name="institution" v-model="entry['institution']" required>
+                <div class="label-box">
+                  <label class="label" for="institution">Университет</label>
+                </div>
               </td>
-               <td><input class="input" type="text" name="faculty" v-model="entry['faculty']" placeholder="Факультет"></td>
+               <td>
+                 <input class="input" id="faculty" type="text" name="faculty" v-model="entry['faculty']" required>
+                 <div class="label-box">
+                   <label class="label" for="faculty">Факультет</label>
+                 </div>
+               </td>
               <td>
-                <select name="formStudy" v-model="entry['formStudy']">
+                <select class="form-study" name="formStudy" v-model="entry['formStudy']">
                   <option selected>Дневная</option>
                   <option>Вечерняя</option>
                   <option>Заочная</option>
                 </select>
               </td>
               <td>
-                <input class="input" type="number" name="admission-year" placeholder="Год поступления">
+                <input class="input" id="admission-year" type="number" name="admission-year" required>
+                <div class="label-box">
+                  <label class="label" for="admission-year">Год поступления</label>
+                </div>
               </td>
               <td>
-                <input class="input" type="number" name="graduation-year" placeholder="Год окончания или ухода">
+                <input class="input" type="number" name="graduation-year" required>
+                <div class="label-box">
+                  <label class="label" for="graduation-year">Год окончания</label>
+                </div>
               </td>
               <td>
-                <input class="input" type="number" name="graduation-course" placeholder="Курс">
+                <input class="input" id="graduation-course" type="number" name="graduation-course" required>
+                <div class="label-box">
+                  <label class="label" for="graduation-course">Курс</label>
+                </div>
               </td>
               <td>
-                <input class="input" type="number" name="specialty" placeholder="№ Диплома или удовстоверения">
+                <input class="input" id="specialty" type="number" name="specialty" required>
+                <div class="label-box">
+                  <label class="label" for="specialty">Специальность</label>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -107,33 +129,41 @@
       <section class="skills">
         <div class="row">
           <div class="col">
-            <label for="languages">Владение иностранными языками</label>
-            <input class="input" id="languages" type="text" name="languages" placeholder="Иностарнные языки">
+            <input class="input" id="languages" type="text" name="languages" required>
+            <div class="label-box">
+              <label class="label" for="languages">Иностранные языки</label>
+            </div>
           </div>
           <div class="col">
-            <label for="science-degree">Ученая степень, ученое звание</label>
-            <input class="input" id="science-degree" type="text" name="science-degree" placeholder="Ученая степень">
+            <input class="input" id="science-degree" type="text" name="science-degree" required>
+            <div class="label-box">
+              <label class="label" for="science-degree">Ученая степень, ученое звание</label>
+            </div>
           </div>
           <div class="col">
-            <label for="scientific-work">Научные труды и изобретения</label>
-            <textarea class="textarea" id="scientific-work" name="scientific-work" placeholder="Научные труды и изобретения"></textarea>
+            <input class="input" id="scientific-work" name="scientific-work" required>
+            <div class="label-box">
+              <label class="label" for="scientific-work">Научные труды и изобретения</label>
+            </div>
           </div>
       </div>
       </section>
       <section class="work-activity">
-        <p class="work-activity__description">Выполняемая работа с начала трудовой деятельности (включая учебу в высших и средних
-          специальных учебных заведениях, военную службу и работу по совместительству)</p>
+        <h2>Выполняемая работа с начала трудовой деятельности</h2>
+        <p class="work-activity__description">Включая учебу в высших и средних специальных учебных заведениях, военную службу и работу по совместительству</p>
         <table class="table work-activity__table table-responsive">
+          <thead>
+            <tr>
+              <th class="no-border" colspan="2">Месяц и год</th>
+              <th rowspan="2">Должность с указанием учреждения, организации, предприятия, а также министерства (ведомства)</th>
+              <th rowspan="2">Местонахождение учреждения, организации, предприятия</th>
+            </tr>
+            <tr>
+              <th>Поступления</th>
+              <th>Ухода</th>
+            </tr>
+          </thead>
           <tbody>
-            <tr>
-              <td colspan="2">Месяц и год</td>
-              <td rowspan="2">Должность с указанием учреждения, организации, предприятия, а также министерства (ведомства)</td>
-              <td rowspan="2">Местонахождение учреждения, организации, предприятия</td>
-            </tr>
-            <tr>
-              <td>Поступления</td>
-              <td>Ухода</td>
-            </tr>
             <tr v-for="(entry, index) in tableDataWork">
               <td>
                 <input class="input" type="date" name="work-activity__entry" v-model="entry['entry']" placeholder="Поступления">
@@ -142,18 +172,25 @@
                 <input class="input" type="date" name="work-activity__exit" v-model="entry['exit']" placeholder="Уход">
               </td>
               <td>
-                <input class="input" type="text" name="work-activity__position" v-model="entry['position']" placeholder="Должность">
+                <input class="input" id="work-activity__position" type="text" name="work-activity__position" v-model="entry['position']"
+                  required>
+                <div class="label-box">
+                  <label class="label" for="work-activity__position">Должность</label>
+                </div>
               </td>
               <td>
-                <input class="input" type="text" name="work-activity__location" v-model="entry['location']"
-                  placeholder="Местонахождение предприятия">
+                <input class="input" id="work-activity__location" type="text" name="work-activity__location" v-model="entry['location']"
+                  required>
+                <div class="label-box">
+                  <label class="label" for="work-activity__location">Местонахождение</label>
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
         <button class="btn btn-primary" type="button" @click = "generateRow(tableDataWork)">Добавить еще</button>
         <button class="btn btn-danger" type="button" @click = "deleteRow(tableDataWork)">Удалить ряд</button>
-        <p class="work-activity__note"> <span class="work-activity__note-star">*</span> При заполнении данного пункта учреждения,
+        <p class="work-activity__note"> <span class="note-star">*</span> При заполнении данного пункта учреждения,
           организации и предприятия необходимо именовать так, как они назывались в свое время, военную службу записывать с указанием
           должности.
         </p>
@@ -161,16 +198,18 @@
       <section class="stay-abroad">
         <h2>Пребывание за границей</h2>
         <table class="table stay-abroad__table table-responsive">
+          <thead>
+            <tr>
+              <th colspan="2">Месяц и год</th>
+              <th rowspan="2">В какой старне</th>
+              <th rowspan="2">Цель пребывания за границей (работа, служебная командировка, туризм)</th>
+            </tr>
+            <tr>
+              <th>С какого времени</th>
+              <th>По какое время</th>
+            </tr>
+          </thead>
           <tbody>
-            <tr>
-              <td colspan="2">Месяц и год</td>
-              <td rowspan="2">В какой старне</td>
-              <td rowspan="2">Цель пребывания за границей (работа, служебная командировка, туризм)</td>
-            </tr>
-            <tr>
-              <td>С какого времени</td>
-              <td>По какое время</td>
-            </tr>
             <tr v-for="(entry, index) in tableDataAbroad">
               <td>
                 <input class="input" type="date" name="work-activity__since-time" v-model="entry['sinceTime']"
@@ -180,11 +219,18 @@
                 <input class="input" type="date" name="work-activity__at-time" v-model="entry['atTime']" placeholder="По какое время">
               </td>
               <td>
-                <input class="input" type="text" name="work-activity__country" v-model="entry['country']" placeholder="В какой стране">
+                <input class="input" id="work-activity__country" type="text" name="work-activity__country" v-model="entry['country']"
+                  required>
+                <div class="label-box">
+                  <label class="label" for="work-activity__country">Страна</label>
+                </div>
               </td>
               <td>
-                <input class="input" type="text" name="work-activity__goal" v-model="entry['goal']"
-                  placeholder="Цель прибытия за границей">
+                <input class="input" id="work-activity__goal" type="text" name="work-activity__goal" v-model="entry['goal']"
+                  required>
+                <div class="label-box">
+                  <label class="label" for="work-activity__goal">Цель</label>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -194,18 +240,24 @@
       </section>
       <section class="government-award">
         <h2>Правительственные награды</h2>
-        <table class="table table-responsive">
-          <tbody>
+        <table class="table government-award__table table-responsive">
+          <thead>
             <tr>
-              <td>Когда награждены</td>
-              <td>Чем награждены</td>
+              <th>Когда награждены</th>
+              <th>Чем награждены</th>
             </tr>
+          </thead>
+          <tbody>
             <tr v-for="(entry, index) in tableDataAward">
               <td>
                 <input class="input" type="date" name="government-award__data"  v-model="entry['data']" placeholder="Дата награднения">
               </td>
               <td>
-                <input class="input" type="text" name="government-award__reward"  v-model="entry['reward']" placeholder="Чем награждены">
+                <input class="input" id="government-award__reward" type="text" name="government-award__reward"
+                  v-model="entry['reward']" required>
+                <div class="label-box">
+                  <label class="label" for="government-award__reward">Награда</label>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -217,47 +269,61 @@
         <h2>Воинская обязанность</h2>
         <div class="row">
           <div class="col">
-            <label for="military-duty__rank">Воинское звание</label>
-            <input class="input" id="military-duty__rank" type="text" name="military-duty__rank" placeholder="Воинское звание">
+            <input class="input" id="military-duty__rank" type="text" name="military-duty__rank" required>
+            <div class="label-box">
+              <label class="label" for="military-duty__rank">Воинское звание</label>
+            </div>
           </div>
           <div class="col">
-            <label for="military-duty__composition">Состав</label>
-            <input class="input" id="military-duty__composition" type="text" name="military-duty__composition"
-              placeholder="командный, политический, административный, технический">
+            <input class="input" id="military-duty__composition" type="text" name="military-duty__composition" required>
+              <div class="label-box">
+                <label class="label" for="military-duty__composition">Состав</label>
+              </div>
           </div>
           <div class="col">
-            <label for="military-duty__branch">Состав</label>
-            <input class="input" id="military-duty__branch" type="text" name="military-duty__branch" placeholder="Род войск">
+            <input class="input" id="military-duty__branch" type="text" name="military-duty__branch" required>
+            <div class="label-box">
+              <label class="label" for="military-duty__branch">Род войск</label>
+            </div>
           </div>
         </div>
       </section>
       <section class="family-status">
         <h2>Семейное положение</h2>
-        <p>Семейное положение в момент заполнения личного листка (перечислить членов семьи с указанием года рождения и указанием контактного телефона; обязательно к заполнению)</p>
+        <p class="family-status__description">Перечислить членов семьи с указанием года рождения и указанием контактного телефона
+          <span class="note-star">*</span></p>
         <table class="table table-responsive">
-          <tbody>
+          <thead>
             <tr>
-              <td>Фамилия</td>
-              <td>Имя</td>
-              <td>Отчество</td>
-              <td>Дата рождения</td>
-              <td>Контактный телефон</td>
+              <th>Фамилия</th>
+              <th>Имя</th>
+              <th>Отчество</th>
+              <th>Дата рождения</th>
+              <th>Контактный телефон</th>
             </tr>
+            </thead>
+          <tbody>
             <tr v-for="(entry, index) in tableDataFamily">
               <td>
-                <label for="family-status__name">Имя</label>
                 <input class="input" id="family-status__name" type="text" name="family-status__name"  v-model="entry['name']"
-                  placeholder="Имя">
+                  required>
+                  <div class="label-box">
+                    <label class="label" for="family-status__name">Имя</label>
+                  </div>
               </td>
               <td>
-                <label for="family-status__surname">Фамилия</label>
                 <input class="input" id="family-status__surname" type="text" name="family-status__surname"  v-model="entry['surname']"
-                  placeholder="Фамилия">
+                  required>
+                  <div class="label-box">
+                    <label class="label" for="family-status__surname">Фамилия</label>
+                  </div>
               </td>
               <td>
-                <label for="family-status__patronymic">Отчество</label>
                 <input class="input" id="family-status__patronymic" type="text" name="family-status__patronymic"
-                  v-model="entry['patronymic']" placeholder="Отчество">
+                  v-model="entry['patronymic']" required>
+                  <div class="label-box">
+                    <label class="label" for="family-status__patronymic">Отчество</label>
+                  </div>
               </td>
               <td>
                 <label for="family-status__birthday">Дата рождения</label>
@@ -265,27 +331,34 @@
                   v-model="entry['birthday']" placeholder="Дата рождения">
               </td>
               <td>
-                <label for="family-status__telephone">Контактный телефон</label>
                 <input class="input" id="family-status__telephone" type="tel" name="family-status__telephone"
-                  v-model="entry['telephone']" placeholder="Контактный телефон">
+                  v-model="entry['telephone']" required>
+                  <div class="label-box">
+                    <label class="label" for="family-status__telephone">Контактный телефон</label>
+                  </div>
               </td>
             </tr>
           </tbody>
         </table>
         <button class="btn btn-primary" type="button" @click = "generateRow(tableDataFamily)">Добавить еще</button>
         <button class="btn btn-danger" type="button" @click = "deleteRow(tableDataFamily)">Удалить ряд</button>
+        <p><span class="note-star">*</span> Обязательно к заполнению</p>
       </section>
       <section class="contact-information">
         <div class="row">
           <div class="col">
-            <label for="contact-information__address">Домашний адрес</label>
             <input class="input" id="contact-information__address" type="text"
-              name="contact-information__address" placeholder="Домашний адрес">
+              name="contact-information__address" required>
+            <div class="label-box">
+              <label class="label" for="contact-information__address">Домашний адрес</label>
+            </div>
           </div>
           <div class="col">
-            <label for="contact-information__telephone">Контактный телефон</label>
             <input class="input" id="contact-information__telephone" type="tel"
-              name="contact-information__telephone" placeholder="Контактный телефон">
+              name="contact-information__telephone" required>
+              <div class="label-box">
+                <label class="label" for="contact-information__telephone">Контактный телефон</label>
+              </div>
           </div>
         </div>
       </section>
@@ -293,19 +366,25 @@
         <h2>Паспортные данные</h2>
         <div class="row">
           <div class="col">
-            <label for="passport-data__passport-series">Серия паспорта</label>
             <input class="input" id="passport-data__passport-series" type="text"
-              name="passport-data__passport-series" placeholder="Серия паспорта">
+              name="passport-data__passport-series" required>
+              <div class="label-box">
+                <label class="label" for="passport-data__passport-series">Серия паспорта</label>
+              </div>
           </div>
           <div class="col">
-            <label for="passport-data__passport-number">Номер паспорта</label>
             <input class="input" id="passport-data__passport-number" type="text"
-              name="passport-data__passport-number" placeholder="Номер паспорта">
+              name="passport-data__passport-number" required>
+              <div class="label-box">
+                <label class="label" for="passport-data__passport-number">Номер паспорта</label>
+              </div>
           </div>
           <div class="col">
-            <label for="passport-data__passport-issued">Выдан</label>
             <input class="input" id="passport-data__passport-issued" type="text"
-              name="passport-data__passport-issued" placeholder="Кем выдан">
+              name="passport-data__passport-issued" required>
+              <div class="label-box">
+                <label class="label" for="passport-data__passport-issued">Кем выдан</label>
+              </div>
           </div>
         </div>
       </section>
@@ -313,14 +392,18 @@
         <h2>Дополнительные документы</h2>
         <div class="row">
           <div class="col">
-            <label for="additional-docs__inn">ИНН</label>
             <input class="input" id="additional-docs__inn" type="text"
-              name="additional-docs__inn" placeholder="ИНН">
+              name="additional-docs__inn" required>
+              <div class="label-box">
+                <label class="label" for="additional-docs__inn">ИНН</label>
+              </div>
           </div>
           <div class="col">
-            <label for="additional-docs__PFR">ПФР</label>
             <input class="input" id="additional-docs__PFR" type="text"
-              name="additional-docs__PFR" placeholder="ПФР">
+              name="additional-docs__PFR" required>
+              <div class="label-box">
+                <label class="label" for="additional-docs__PFR">ПФР</label>
+              </div>
           </div>
         </div>
       </section>
@@ -421,16 +504,51 @@ export default {
 
 <style media="screen">
 
-.page {
-  min-width: 320px;
-}
+  body {
+    background-color: #F8FAFC;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0;
+  }
+
+  section {
+    margin-top: 40px;
+  }
+
+  select {
+   padding: 5px;
+   font-size: 16px;
+   border: 1px solid #ccc;
+   height: 34px;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .page {
+    min-width: 320px;
+  }
 
   .main-header {
     text-align: center;
 
     min-height: 80px;
     padding-bottom: 20px;
-    border-bottom:  2px solid #ededed;
   }
 
   .logotype {
@@ -443,6 +561,8 @@ export default {
     min-width: 150px;
     padding-left: 10px;
     padding-right: 10px;
+
+    margin-top: 20px;
   }
 
   .btn-form {
@@ -471,28 +591,45 @@ export default {
   }
 
   .table {
+    border-radius: 10px;
+  }
+
+ .table {
+    text-align: center;
+
     border-collapse: collapse;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+  }
+
+  .table thead th {
+    vertical-align: middle;
   }
 
   .table tr {
-    border: 1px solid black;
+    border: none;
   }
 
-  .table td {
-    border: 1px solid black;
-  }
-/*
-  .table td {
+  .table thead th {
     border-top: none;
-  } */
+    border-bottom: none;
+  }
+
+  .table select {
+    margin-top: 25px;
+  }
+
+  .government-award__table td:last-child {
+    width: 100%;
+  }
+
 
   .success {
-    background-color: #28a745;
+    color: #28a745;
   }
 
   .fail {
-    color: #fff;
-    background-color: #dc3545;
+    color: #dc3545;
   }
 
   .education__description {
@@ -518,36 +655,16 @@ export default {
     width: 100%;
   }
 
-  /* Временно */
+  .container {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
 
-    .container {
-      /* background-color: #7FC7FF; */
-      margin-top: 10px;
-    }
-
-    .col {
-      /* background-color: #FFBF00; */
-      /* outline: 3px solid red; */
-    }
-
-    label {
-      display: block;
-      margin-bottom: 0;
-    }
-
-    section {
-      margin-top: 20px;
-    }
-
-    select {
-     padding: 5px;
-     font-size: 16px;
-     border: 1px solid #ccc;
-     height: 34px;
-  }
-
-  p {
-    margin-bottom: 0;
+    background-color: #fff;
+    box-shadow: 0 20px 20px 20px rgba(0, 0, 0, 0.04);
   }
 
   /* Crop */
@@ -561,22 +678,143 @@ export default {
     margin: 0 auto;
   }
 
+  .status-crop {
+    display: inline-block;
+    width: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
   .croppa-container {
-     border: 2px solid grey;
-     border-radius: 8px;
-     margin-top: 10px;
+    border: 2px solid grey;
+    border-radius: 8px;
+    margin-top: 10px;
 
-     background-color: #E6E6E6;
-   }
+    background-color: #E6E6E6;
+ }
 
-   .croppa-container:hover {
-     opacity: 1;
-     background-color: #F0F0F0;
-   }
+ .croppa-container:hover{
+   opacity: 1;
+   background-color: #F0F0F0;
+ }
 
-   .icon-remove {
-     top: -11.75px;
-     right: -10.75px;
-   }
+ .icon-remove {
+   top: -11.75px;
+   right: -10.75px;
+ }
+
+   /* Оформление */
+
+  .label-box {
+    position: relative;
+  }
+
+  .label-box::before,
+  .label-box::after {
+    position: absolute;
+    bottom: 1px;
+    width: 0;
+    height: 2px;
+    background-color: #757575;
+    content: "";
+    transition-duration: 0.2s;
+    transition-property: width;
+  }
+
+  .label-box::before {
+    left: 50%;
+  }
+
+  .label-box::after {
+    right: 50%;
+  }
+
+  input:focus + .label-box::before,
+  input:focus + .label-box::after {
+    width: 50%;
+  }
+
+  input {
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid #757575;
+    font-size: 18px;
+
+    margin-top: 10px;
+    padding-bottom: 10px;
+
+    outline: none;
+  }
+
+  label {
+    position: absolute;
+    top: -38px;
+    left: 10px;
+    color: #000;
+    font-size: 18px;
+    transition-duration: 0.2s;
+    pointer-events: none;
+  }
+
+  input:focus + .label-box label,
+  input:valid + .label-box label {
+    font-size: 14px;
+    transform: translateY(-22px);
+  }
+
+  .input-name {
+    margin-top: 30px;
+  }
+
+  .birth-date {
+    margin-top: 30px;
+  }
+
+  .sex {
+    margin-top: 25px;
+    border: none;
+    border-bottom: 1px solid #757575;
+  }
+
+  .label-sex {
+    font-size: 14px;
+    transform: translateY(-20px);
+  }
+
+  .label-birth-date {
+    font-size: 14px;
+    transform: translateY(-22px);
+  }
+
+  .input-birth-place {
+    margin-top: 20px;
+  }
+
+  .form-study {
+    margin-top: 15px;
+  }
+
+  .work-activity__description {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .work-activity__note {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .note-star {
+    font-size: 30px;
+    color: #dc3545;
+  }
+
+
+  .family-status__description {
+    text-align: center;
+    margin-bottom: 15px;
+  }
 
 </style>
