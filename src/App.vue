@@ -420,6 +420,7 @@ export default {
 </script>
 
 <style media="screen">
+
 .page {
   min-width: 320px;
 }
