@@ -9,42 +9,48 @@
           <div class="col-12 col-md-8">
             <div class="row">
               <div class="col">
-                <input class="input" id="main-information__surname" type="text" name="main-information__surname" required>
+                <input class="input" id="main-information__surname" type="text" name="main-information__surname" placeholder="Иванов" required>
                 <div class="label-box">
                   <label class="label" for="main-information__surname">Фамилия</label>
                 </div>
-                <input class="input input-name" id="main-information__name" type="text" name="main-information__name" required>
+                <input class="input input-name" id="main-information__name" type="text" name="main-information__name" placeholder="Иван" required>
                 <div class="label-box">
                   <label class="label" for="main-information__name">Имя</label>
                 </div>
+                  <select class="sex" id="sex" name="sex" v-model="sex" required>
+                    <option>Муж</option>
+                    <option>Жен</option>
+                  </select>
+                  <div class="label-box">
+                    <label class="label label-sex" for="sex">Пол</label>
+                  </div>
               </div>
               <div class="col">
-                <select class="sex" id="sex" name="sex">
-                  <option>Муж</option>
-                  <option>Жен</option>
-                </select>
+                <input class="input input-name" id="main-information__patronymic" type="text" name="main-information__patronymic" placeholder="Иванович"
+                  required>
                 <div class="label-box">
-                  <label class="label label-sex" for="sex">Пол</label>
+                  <label class="label" for="main-information__patronymic">Отчество</label>
                 </div>
-                <input class="birth-date" id="birth-date" type="date" name="birth-date" required>
+                <input class="birth-date" id="birth-date" type="date" name="birth-date" min="1900-01-01" max="2100-01-01" required>
                 <div class="label-box">
                   <label class="label label-birth-date" for="birth-date">Дата рождения</label>
                 </div>
+                  <input class="input input-birth-place" type="text" name="birth-place" placeholder="г. Москва, ул. Ленина, д. 12" required>
+                  <div class="label-box">
+                    <label class="label label-birth-place" for="birth-place">Место рождения</label>
+                  </div>
               </div>
             </div>
-            <input class="input input-birth-place" type="text" name="birth-place" required>
-            <div class="label-box">
-              <label class="label label-birth-place" for="birth-place">Место рождения</label>
             </div>
-          </div>
           <div class="col-12 col-md-4">
             <div class="crop">
               <croppa v-model="myCroppa"
               :width="150"
-              :height="150"
+              :height="200"
               placeholder="Ваше фото"
               placeholder-color="#000"
               :placeholder-font-size="16"
+              :zoom-speed="10"
               :show-remove-button="true"
               remove-button-color="red"
               :remove-button-size="25"
@@ -53,12 +59,8 @@
               :quality="1"
               :prevent-white-space="true">
             </croppa>
-            <button class="btn btn-default btn-crop" type="button" @click="generateImage">Обрезать</button>
-            <p class="status-crop" v-bind:class="{ success: cropFlag, fail: !cropFlag }">{{cropStatus}}</p>
-            </div>
             </div>
           </div>
-          <div class="row">
         </div>
       </section>
       <section class="education">
@@ -72,19 +74,21 @@
               <th>Год поступления</th>
               <th>Год окончания или ухода</th>
               <th>Если не окончил, то с какого курса ушел</th>
-              <th>Полученная спецальность - указать № диплома</th>
+              <th>Полученная спецальность</th>
+              <th>№ диплома</th>
               </tr>
           </thead>
           <tbody>
             <tr v-for="(entry, index) in tableDataEducation">
               <td>
-                <input class="input" id="institution" type="text" name="institution" v-model="entry['institution']" required>
+                <input class="input" id="institution" type="text" name="institution" v-model="entry['institution']" placeholder="Московский политех"
+                  required>
                 <div class="label-box">
                   <label class="label" for="institution">Университет</label>
                 </div>
               </td>
                <td>
-                 <input class="input" id="faculty" type="text" name="faculty" v-model="entry['faculty']" required>
+                 <input class="input" id="faculty" type="text" name="faculty" v-model="entry['faculty']" placeholder="Информационные системы" required>
                  <div class="label-box">
                    <label class="label" for="faculty">Факультет</label>
                  </div>
@@ -97,27 +101,38 @@
                 </select>
               </td>
               <td>
-                <input class="input" id="admission-year" type="number" name="admission-year" required>
+                <input class="input" id="admission-year" type="number" min="1900" max="2099" step="1" name="admission-year"
+                  v-model="entry['admissionYear']" placeholder="2018" required>
                 <div class="label-box">
                   <label class="label" for="admission-year">Год поступления</label>
                 </div>
               </td>
               <td>
-                <input class="input" type="number" name="graduation-year" required>
+                <input class="input" type="number" min="1900" max="2099" step="1" name="graduation-year"
+                  v-model="entry['graduationYear']" placeholder="2018" required>
                 <div class="label-box">
                   <label class="label" for="graduation-year">Год окончания</label>
                 </div>
               </td>
               <td>
-                <input class="input" id="graduation-course" type="number" name="graduation-course" required>
+                <input class="input" id="graduation-course" type="number" min="1" max="7" step="1" name="graduation-course"
+                  v-model="entry['graduationCourse']" placeholder="1">
                 <div class="label-box">
                   <label class="label" for="graduation-course">Курс</label>
                 </div>
               </td>
               <td>
-                <input class="input" id="specialty" type="number" name="specialty" required>
+                <input class="input" id="specialty" type="text" name="specialty" placeholder="Программист"
+                  v-model="entry['specialty']" required>
                 <div class="label-box">
                   <label class="label" for="specialty">Специальность</label>
+                </div>
+              </td>
+              <td>
+                <input class="input" id="diploma" type="text" name="diploma" v-mask="'###### #######'" placeholder="999999 9999999"
+                  v-model="entry['diploma']"  required>
+                <div class="label-box">
+                  <label class="label" for="diploma">№ диплома</label>
                 </div>
               </td>
             </tr>
@@ -125,25 +140,26 @@
         </table>
         <button class="btn btn-primary" type="button" @click = "generateRow(tableDataEducation)">Добавить еще</button>
         <button class="btn btn-danger" type="button" @click = "deleteRow(tableDataEducation)">Удалить ряд</button>
+        <button class="btn" type="button" @click = "showData()">Консоль</button>
       </section>
       <section class="skills">
         <div class="row">
           <div class="col">
-            <input class="input" id="languages" type="text" name="languages" required>
+            <input class="input" id="languages" type="text" name="languages" placeholder="Английский, Испанский">
             <div class="label-box">
               <label class="label" for="languages">Иностранные языки</label>
             </div>
           </div>
           <div class="col">
-            <input class="input" id="science-degree" type="text" name="science-degree" required>
+            <input class="input" id="science-degree" type="text" name="science-degree" placeholder="Доктор наук">
             <div class="label-box">
-              <label class="label" for="science-degree">Ученая степень, ученое звание</label>
+              <label class="label" for="science-degree">Ученая степень</label>
             </div>
           </div>
           <div class="col">
-            <input class="input" id="scientific-work" name="scientific-work" required>
+            <input class="input" id="scientific-work" name="scientific-work" placeholder="Научные работы">
             <div class="label-box">
-              <label class="label" for="scientific-work">Научные труды и изобретения</label>
+              <label class="label" for="scientific-work">Научные труды</label>
             </div>
           </div>
       </div>
@@ -166,21 +182,23 @@
           <tbody>
             <tr v-for="(entry, index) in tableDataWork">
               <td>
-                <input class="input" type="date" name="work-activity__entry" v-model="entry['entry']" placeholder="Поступления">
+                <input class="input" type="date" name="work-activity__entry" v-model="entry['entry']" min="1900-01-01" max="2100-01-01"
+                  placeholder="Поступления">
               </td>
               <td>
-                <input class="input" type="date" name="work-activity__exit" v-model="entry['exit']" placeholder="Уход">
+                <input class="input" type="date" name="work-activity__exit" v-model="entry['exit']" min="1900-01-01" max="2100-01-01"
+                 placeholder="Уход">
               </td>
               <td>
                 <input class="input" id="work-activity__position" type="text" name="work-activity__position" v-model="entry['position']"
-                  required>
+                  placeholder="Менеджер" required>
                 <div class="label-box">
                   <label class="label" for="work-activity__position">Должность</label>
                 </div>
               </td>
               <td>
                 <input class="input" id="work-activity__location" type="text" name="work-activity__location" v-model="entry['location']"
-                  required>
+                  placeholder="г. Москва, ул. Ленина, д. 12" required>
                 <div class="label-box">
                   <label class="label" for="work-activity__location">Местонахождение</label>
                 </div>
@@ -202,7 +220,7 @@
             <tr>
               <th colspan="2">Месяц и год</th>
               <th rowspan="2">В какой старне</th>
-              <th rowspan="2">Цель пребывания за границей (работа, служебная командировка, туризм)</th>
+              <th rowspan="2">Цель пребывания за границей</th>
             </tr>
             <tr>
               <th>С какого времени</th>
@@ -212,22 +230,23 @@
           <tbody>
             <tr v-for="(entry, index) in tableDataAbroad">
               <td>
-                <input class="input" type="date" name="work-activity__since-time" v-model="entry['sinceTime']"
+                <input class="input" type="month" name="work-activity__since-time" v-model="entry['sinceTime']" min="1900-01" max="2100-01"
                   placeholder="С какого времени">
               </td>
               <td>
-                <input class="input" type="date" name="work-activity__at-time" v-model="entry['atTime']" placeholder="По какое время">
+                <input class="input" type="month" name="work-activity__at-time" v-model="entry['atTime']" min="1900-01" max="2100-01"
+                  placeholder="По какое время">
               </td>
               <td>
                 <input class="input" id="work-activity__country" type="text" name="work-activity__country" v-model="entry['country']"
-                  required>
+                 placeholder="Россия" required>
                 <div class="label-box">
                   <label class="label" for="work-activity__country">Страна</label>
                 </div>
               </td>
               <td>
                 <input class="input" id="work-activity__goal" type="text" name="work-activity__goal" v-model="entry['goal']"
-                  required>
+                 placeholder="работа, служебная командировка, туризм" required>
                 <div class="label-box">
                   <label class="label" for="work-activity__goal">Цель</label>
                 </div>
@@ -250,11 +269,12 @@
           <tbody>
             <tr v-for="(entry, index) in tableDataAward">
               <td>
-                <input class="input" type="date" name="government-award__data"  v-model="entry['data']" placeholder="Дата награднения">
+                <input class="input" type="date" name="government-award__data"  v-model="entry['data']" min="1900-01-01" max="2100-01-01"
+                  placeholder="Дата награднения">
               </td>
               <td>
                 <input class="input" id="government-award__reward" type="text" name="government-award__reward"
-                  v-model="entry['reward']" required>
+                  v-model="entry['reward']" placeholder="Медаль, Почетная грамота">
                 <div class="label-box">
                   <label class="label" for="government-award__reward">Награда</label>
                 </div>
@@ -265,23 +285,23 @@
         <button class="btn btn-primary" type="button" @click = "generateRow(tableDataAward)">Добавить еще</button>
         <button class="btn btn-danger" type="button" @click = "deleteRow(tableDataAward)">Удалить ряд</button>
       </section>
-      <section class="military-duty">
+      <section class="military-duty" v-if="this.sex=='Муж'">
         <h2>Воинская обязанность</h2>
         <div class="row">
           <div class="col">
-            <input class="input" id="military-duty__rank" type="text" name="military-duty__rank" required>
+            <input class="input" id="military-duty__rank" type="text" name="military-duty__rank" placeholder="Cержант" required>
             <div class="label-box">
               <label class="label" for="military-duty__rank">Воинское звание</label>
             </div>
           </div>
           <div class="col">
-            <input class="input" id="military-duty__composition" type="text" name="military-duty__composition" required>
+            <input class="input" id="military-duty__composition" type="text" name="military-duty__composition" placeholder="Рота" required>
               <div class="label-box">
                 <label class="label" for="military-duty__composition">Состав</label>
               </div>
           </div>
           <div class="col">
-            <input class="input" id="military-duty__branch" type="text" name="military-duty__branch" required>
+            <input class="input" id="military-duty__branch" type="text" name="military-duty__branch" placeholder="Мотострелковые войска" required>
             <div class="label-box">
               <label class="label" for="military-duty__branch">Род войск</label>
             </div>
@@ -305,34 +325,34 @@
           <tbody>
             <tr v-for="(entry, index) in tableDataFamily">
               <td>
-                <input class="input" id="family-status__name" type="text" name="family-status__name"  v-model="entry['name']"
+                <input class="input" id="family-status__name" type="text" name="family-status__name"  v-model="entry['name']" placeholder="Иван"
                   required>
-                  <div class="label-box">
-                    <label class="label" for="family-status__name">Имя</label>
-                  </div>
+                <div class="label-box">
+                  <label class="label" for="family-status__name">Имя</label>
+                </div>
               </td>
               <td>
                 <input class="input" id="family-status__surname" type="text" name="family-status__surname"  v-model="entry['surname']"
-                  required>
-                  <div class="label-box">
-                    <label class="label" for="family-status__surname">Фамилия</label>
-                  </div>
+                  placeholder="Иванов" required>
+                <div class="label-box">
+                  <label class="label" for="family-status__surname">Фамилия</label>
+                </div>
               </td>
               <td>
                 <input class="input" id="family-status__patronymic" type="text" name="family-status__patronymic"
-                  v-model="entry['patronymic']" required>
-                  <div class="label-box">
-                    <label class="label" for="family-status__patronymic">Отчество</label>
-                  </div>
+                  v-model="entry['patronymic']" placeholder="Иванович" required>
+                <div class="label-box">
+                  <label class="label" for="family-status__patronymic">Отчество</label>
+                </div>
               </td>
               <td>
                 <label for="family-status__birthday">Дата рождения</label>
                 <input class="input" id="family-status__birthday" type="date" name="family-status__birthday"
-                  v-model="entry['birthday']" placeholder="Дата рождения">
+                  v-model="entry['birthday']" min="1900-01-01" max="2100-01-01" placeholder="Дата рождения">
               </td>
               <td>
                 <input class="input" id="family-status__telephone" type="tel" name="family-status__telephone"
-                  v-model="entry['telephone']" required>
+                  v-model="entry['telephone']" v-mask="'+7 (###)-###-##-##'" placeholder="+7 (999)-999-99-99" required>
                   <div class="label-box">
                     <label class="label" for="family-status__telephone">Контактный телефон</label>
                   </div>
@@ -348,14 +368,14 @@
         <div class="row">
           <div class="col">
             <input class="input" id="contact-information__address" type="text"
-              name="contact-information__address" required>
+              name="contact-information__address" placeholder="г. Москва, ул. Ленина, д. 12" required>
             <div class="label-box">
               <label class="label" for="contact-information__address">Домашний адрес</label>
             </div>
           </div>
           <div class="col">
             <input class="input" id="contact-information__telephone" type="tel"
-              name="contact-information__telephone" required>
+              name="contact-information__telephone" v-mask="'+7 (###)-###-##-##'" placeholder="+7 (999)-999-99-99" required>
               <div class="label-box">
                 <label class="label" for="contact-information__telephone">Контактный телефон</label>
               </div>
@@ -367,21 +387,21 @@
         <div class="row">
           <div class="col">
             <input class="input" id="passport-data__passport-series" type="text"
-              name="passport-data__passport-series" required>
+              name="passport-data__passport-series" v-mask="'####'" placeholder="1111" required>
               <div class="label-box">
                 <label class="label" for="passport-data__passport-series">Серия паспорта</label>
               </div>
           </div>
           <div class="col">
             <input class="input" id="passport-data__passport-number" type="text"
-              name="passport-data__passport-number" required>
+              name="passport-data__passport-number" v-mask="'######'" placeholder="111111" required>
               <div class="label-box">
                 <label class="label" for="passport-data__passport-number">Номер паспорта</label>
               </div>
           </div>
           <div class="col">
             <input class="input" id="passport-data__passport-issued" type="text"
-              name="passport-data__passport-issued" required>
+              name="passport-data__passport-issued" placeholder="Отделом УФМС России по " required>
               <div class="label-box">
                 <label class="label" for="passport-data__passport-issued">Кем выдан</label>
               </div>
@@ -393,14 +413,14 @@
         <div class="row">
           <div class="col">
             <input class="input" id="additional-docs__inn" type="text"
-              name="additional-docs__inn" required>
+              name="additional-docs__inn" v-mask="'############'" placeholder="111111111111" required>
               <div class="label-box">
                 <label class="label" for="additional-docs__inn">ИНН</label>
               </div>
           </div>
           <div class="col">
             <input class="input" id="additional-docs__PFR" type="text"
-              name="additional-docs__PFR" required>
+              name="additional-docs__PFR" v-mask="'###########'" placeholder="11111111111" required>
               <div class="label-box">
                 <label class="label" for="additional-docs__PFR">ПФР</label>
               </div>
@@ -421,7 +441,7 @@
         </ol>
         <textarea class="textarea autobiography__textarea" name="autobiography" placeholder="Пишите здесь"></textarea>
       </section>
-    <button class="btn btn-success btn-form" type="submit">Отправить</button>
+    <button class="btn btn-success btn-form" type="submit" @click="generateImage()">Отправить</button>
   </form>
   </div>
 </template>
@@ -435,7 +455,7 @@ export default {
       myCroppa: null,
       imgUrl: '',
       tableDataEducation: [
-        {institution: '', faculty: '', formStudy: 'Дневная', admissionYear: '', graduationYear: '', graduationCourse: '', specialty: ''}
+        {institution: '', faculty: '', formStudy: 'Дневная', admissionYear: '', graduationYear: '', graduationCourse: '', specialty: '', diploma: ''}
       ],
       tableDataWork: [
         {entry: '', exit: '', position: '', location: ''}
@@ -450,7 +470,8 @@ export default {
         {name: '', surname: '', patronymic: '', birthday: '', telephone: ''}
       ],
       cropStatus: '',
-      cropFlag: false
+      cropFlag: false,
+      sex: 'Муж'
     }
   },
 
@@ -458,19 +479,19 @@ export default {
     generateImage: function() {
     	let url = this.myCroppa.generateDataUrl()
       if (!url) {
-      	this.cropStatus = 'Выберете фото!'
-        this.cropFlag = false;
+      	alert('Выберет фото!')
         return
       }
-      this.cropStatus = 'Успешно'
-      this.cropFlag = true;
       this.imgUrl = url
+      console.log(this.imgUrl);
     },
 
     generateRow: function (massiv) {
       switch(massiv) {
         case this.tableDataEducation:
-          this.tableDataEducation.push({ institution: '', faculty: '', formStudy: ''});
+          this.tableDataEducation.push(
+            {institution: '', faculty: '', formStudy: 'Дневная', admissionYear: '', graduationYear: '', graduationCourse: '', specialty: '', diploma: ''}
+          );
           break
 
         case this.tableDataWork:
@@ -619,7 +640,8 @@ export default {
     margin-top: 25px;
   }
 
-  .government-award__table td:last-child {
+  .government-award__table td:last-child,
+  .stay-abroad__table td:last-child {
     width: 100%;
   }
 
@@ -645,6 +667,8 @@ export default {
   .autobiography__textarea {
     min-height: 200px;
     resize: vertical;
+    padding-left: 10px;
+    padding-top: 10px;
   }
 
   .skills {
@@ -740,7 +764,7 @@ export default {
     border-bottom: 1px solid #757575;
     font-size: 18px;
 
-    margin-top: 10px;
+    margin-top: 20px;
     padding-bottom: 10px;
 
     outline: none;
@@ -751,27 +775,22 @@ export default {
     top: -38px;
     left: 10px;
     color: #000;
-    font-size: 18px;
+    font-size: 14px;
     transition-duration: 0.2s;
     pointer-events: none;
   }
 
-  input:focus + .label-box label,
-  input:valid + .label-box label {
-    font-size: 14px;
+  input + .label-box label {
     transform: translateY(-22px);
   }
 
-  .input-name {
-    margin-top: 30px;
-  }
-
   .birth-date {
-    margin-top: 30px;
+    padding-left: 10px;
   }
 
   .sex {
-    margin-top: 25px;
+    min-height: 39px;
+    margin-top: 20px;
     border: none;
     border-bottom: 1px solid #757575;
   }
