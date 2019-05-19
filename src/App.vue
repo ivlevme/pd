@@ -452,6 +452,7 @@
           <textarea class="textarea autobiography__textarea" name="autobiography" v-model="formData.candidateBiography" placeholder="Пишите здесь">
           </textarea>
         </section>
+      <button type="button" @click="showData()"> Все данные в консоль</button>
       <button class="btn btn-success btn-form" type="submit" @click="showData()">Отправить</button>
       </form>
     </main>
@@ -551,12 +552,12 @@ export default {
     },
 
     showData: function () {
-      console.log("Все из формы - " + this.formData);
-      console.log("Все из таблицы Образование - " + this.tableDataEducation);
-      console.log("Все из таблицы Трудовой деятельности - " + this.tableDataWork);
-      console.log("Все из таблицы Заграницы - " + this.tableDataAbroad);
-      console.log("Все из таблицы Правительственных наград - " + this.tableDataAward);
-      console.log( "Все из таблицы Семейное положение - " + this.tableDataFamily);
+      console.log(this.formData);
+      console.log(this.tableDataEducation);
+      console.log(this.tableDataWork);
+      console.log(this.tableDataAbroad);
+      console.log(this.tableDataAward);
+      console.log(this.tableDataFamily);
       this.generateImage(); // Обезает фото
     }
   }
